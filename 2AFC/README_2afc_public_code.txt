@@ -1,102 +1,107 @@
-# 2AFC Figure Cache Workflow
+# 2AFC Figure Plotting Instructions
 
-This folder contains a cache-based workflow for the 2AFC manuscript figures.
+This folder contains the files needed to restore and view the 2AFC manuscript figures from a compact cache file.
 
-The original file:
+You do not need the original full data file to plot the figures.
+
+You do not need:
 
 2afcData_Complete.mat
+NewData2_DAAS
+params
 
-is large and should not be uploaded to GitHub. Instead, the heavy analysis is run once from the MATLAB workspace, and the generated manuscript source tables and figures are saved into a compact cache:
-
-twoafc_figure_cache.mat
-
-Public users can restore the manuscript outputs from this cache without loading the full 2AFC data file.
-
-------------------------------------------------------------
-Required files
-------------------------------------------------------------
-
-For generating the cache internally:
-
-make_2afc_figure_cache_from_workspace.m
-DAAS_rule_selectivity_suite_public_standalone.m
-DAAS_rule_decoder_part2_public_standalone.m
-
-For public users:
+You only need:
 
 twoafc_figure_cache.mat
 plot_2afc_from_figure_cache.m
 
 ------------------------------------------------------------
-Internal/lab workflow: create the cache
+1. Download the cache file
 ------------------------------------------------------------
 
-Use this only if you have the full 2AFC data loaded in MATLAB.
+Download the figure cache from:
 
-Step 1: Load your full data file in MATLAB.
+https://drive.google.com/file/d/14_9XQxzqLzC1q5xak7snZWr7EblrUvRd/view?usp=sharing
+
+The downloaded file should be named:
+
+twoafc_figure_cache.mat
+
+Place it inside the 2AFC folder.
+
+Your folder should look like this:
+
+2AFC/
+├── README_2afc_public_code.txt
+├── plot_2afc_from_figure_cache.m
+└── twoafc_figure_cache.mat
+
+The other MATLAB files in this folder are included for transparency, but they are not required if you only want to plot the figures from the cache.
+
+------------------------------------------------------------
+2. Open MATLAB
+------------------------------------------------------------
+
+Open MATLAB and set the current folder to the 2AFC folder.
 
 For example:
 
-load('2afcData_Complete.mat')
+cd('path/to/repository/2AFC')
 
-Step 2: Confirm that these variables exist in the workspace:
-
-NewData2_DAAS
-params
-
-Step 3: Make sure these functions are on the MATLAB path:
-
-DAAS_rule_selectivity_suite_public_standalone.m
-DAAS_rule_decoder_part2_public_standalone.m
-make_2afc_figure_cache_from_workspace.m
-
-Step 4: Run:
-
-cache = make_2afc_figure_cache_from_workspace('twoafc_figure_cache.mat');
-
-This creates:
-
-twoafc_figure_cache.mat
-
-and a temporary output folder:
-
-twoafc_cache_build_outputs/
-
-The cache contains the generated source tables and figure files, but not the full NewData2_DAAS structure.
+Replace path/to/repository with the actual path on your computer.
 
 ------------------------------------------------------------
-Public workflow: restore figures and source tables
+3. Plot the figures
 ------------------------------------------------------------
 
-Public users do not need:
-
-2afcData_Complete.mat
-NewData2_DAAS
-params
-
-They only need:
-
-twoafc_figure_cache.mat
-plot_2afc_from_figure_cache.m
-
-From inside the 2AFC folder, run:
+Run this command:
 
 plot_2afc_from_figure_cache('twoafc_figure_cache.mat', 'TwoAFC_outputs')
 
-This creates:
+This will:
+
+1. Restore the figure files.
+2. Restore the source tables.
+3. Open the figures in MATLAB windows.
+4. Save everything into a new folder called TwoAFC_outputs.
+
+------------------------------------------------------------
+4. Where the outputs are saved
+------------------------------------------------------------
+
+After the command runs, a new folder will be created:
 
 TwoAFC_outputs/
 
-with two main folders:
+Inside it, you should see:
 
 TwoAFC_outputs/figures/
 TwoAFC_outputs/source_tables/
+TwoAFC_outputs/README_restored_outputs.txt
+
+The figures folder contains the restored manuscript figure files.
+
+The source_tables folder contains the source tables used to generate or document the figure outputs.
 
 ------------------------------------------------------------
-What the 2AFC code outputs
+5. Optional commands
 ------------------------------------------------------------
 
-The rule-selectivity analysis reproduces manuscript panels including:
+To plot and open the figures in MATLAB:
+
+plot_2afc_from_figure_cache('twoafc_figure_cache.mat', 'TwoAFC_outputs', true)
+
+To restore the files without opening figure windows:
+
+plot_2afc_from_figure_cache('twoafc_figure_cache.mat', 'TwoAFC_outputs', false)
+
+------------------------------------------------------------
+6. What figures are included
+------------------------------------------------------------
+
+The cache restores 2AFC manuscript outputs related to rule selectivity, decoder performance, pathway composition, spatial correlation-distance structure, and cross-day stability.
+
+The restored outputs include panels associated with:
 
 Fig. 7A
 Pooled heatmap of rule-selective activity.
@@ -104,17 +109,11 @@ Pooled heatmap of rule-selective activity.
 Fig. 7B / Fig. 7F
 Pooled summary of rule-selective neurons.
 
-Supplementary Fig. 5B
-Per-day heatmap grid of rule-selective activity.
+Fig. 7D / Fig. 7H
+Decoder AUC across learning days using all neurons.
 
-Supplementary Fig. 5G
-Pathway composition comparison between Rule 1 and Rule 2 neurons.
-
-Supplementary Fig. 5H
-Pathway composition slope across days.
-
-Supplementary Fig. 7C / Supplementary Fig. 7G
-Sound-window versus early-post-sound category composition.
+Fig. 7E / Fig. 7I
+Sound-window versus early-post-sound decoder AUC for rule-preferring and non-rule task-modulated neurons.
 
 Fig. 8E
 Pairwise response-correlation versus spatial-distance scatter plot.
@@ -125,29 +124,41 @@ Correlation-distance effect size across learning days.
 Fig. 8G
 Cross-day stability comparison between rule categories and same-cell matched traces.
 
-The decoder analysis reproduces manuscript panels including:
-
-Fig. 7D / Fig. 7H
-Decoder AUC across learning days using all neurons.
-
-Fig. 7E / Fig. 7I
-Sound-window versus early-post-sound decoder AUC for rule-preferring and non-rule task-modulated neurons.
+Supplementary Fig. 5B
+Per-day heatmap grid of rule-selective activity.
 
 Supplementary Fig. 5D / Supplementary Fig. 5F
 Per-day decoder AUC bars for Rule1, Rule2, and NonRule categories.
 
-download link in the README.
+Supplementary Fig. 5G
+Pathway composition comparison between Rule 1 and Rule 2 neurons.
+
+Supplementary Fig. 5H
+Pathway composition slope across days.
+
+Supplementary Fig. 7C / Supplementary Fig. 7G
+Sound-window versus early-post-sound category composition.
 
 ------------------------------------------------------------
-Minimal public command
+7. Troubleshooting
 ------------------------------------------------------------
 
-plot_2afc_from_figure_cache('twoafc_figure_cache.mat', 'TwoAFC_outputs')
+If MATLAB says it cannot find the cache file, check that this file exists:
+
+2AFC/twoafc_figure_cache.mat
+
+If MATLAB says the function is not recognized, make sure the current MATLAB folder is the 2AFC folder.
+
+You can also add the folder to the MATLAB path:
+
+addpath(genpath('path/to/repository/2AFC'))
+
+If the output folder already exists, MATLAB may write new files into the same folder.
 
 ------------------------------------------------------------
 Summary
 ------------------------------------------------------------
 
-The full 2AFC data file is only needed once to create the cache.
+To plot the 2AFC figures, download twoafc_figure_cache.mat, place it inside the 2AFC folder, open MATLAB in that folder, and run:
 
-The public GitHub version should use the compact cache file.
+plot_2afc_from_figure_cache('twoafc_figure_cache.mat', 'TwoAFC_outputs')
